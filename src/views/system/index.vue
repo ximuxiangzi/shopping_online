@@ -8,9 +8,7 @@
 export default {
   name: 'login',
   data(){
-   return{
-    
-   }
+   return{}
   },
   created(){
     console.log(this.$router)

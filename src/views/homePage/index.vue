@@ -9,8 +9,8 @@
           <Menu></Menu>
         </el-aside>
         <el-container>
-          <el-main style="background:pink;height:300px">
-            <Navbar :name="main"></Navbar>
+          <el-main>
+            <Concent :name="main"></Concent>
           </el-main>
         </el-container>
       </el-container>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Navbar from '@/components/navbar'
+import Concent from '@/components/concent'
 import HomePageTitle from '@/components/homePageTitle'
 import Menu  from '@/components/menu'
 export default {
@@ -34,9 +34,9 @@ export default {
     };
   },
   components:{
-    Navbar,
+    Concent,
     HomePageTitle,
-    Menu
+    Menu,
   }
 };
 </script>
