@@ -10,7 +10,7 @@
         </el-aside>
         <el-container>
           <el-main>
-            <Concent :name="main"></Concent>
+            <Concent></Concent>
           </el-main>
         </el-container>
       </el-container>
@@ -28,9 +28,6 @@ export default {
     return {
       age:18,
       header:"Header",
-      Aside:"Aside",
-      main:"Main",
-      Footer:"Footer",
     };
   },
   components:{

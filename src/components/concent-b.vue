@@ -1,29 +1,34 @@
 <template>
       <ul class="todo-main">
-        <li>
-          <label>
-            <input type="checkbox"/>
-            <span>xxxxx</span>
-          </label>
-          <button class="btn btn-danger" style="display:none">删除</button>
-        </li>
-        <li>
-          <label>
-            <input type="checkbox"/>
-            <span>yyyy</span>
-          </label>
-          <button class="btn btn-danger" style="display:none">删除</button>
-        </li>
+          <concentItem v-for="todo in list"  :key="todo.id" :todo="todo" :chenkTodo="chenkTodo" :delFun="delFun"></concentItem>
       </ul>
 </template>
 
 <script>
+import concentItem from './concentItem.vue'
 export default {
     name:'concent',
     data(){
-        return{
-
-        }
+      return{
+      }
     },
+    props:{
+         list: {
+                type: Array,
+                default: () => []
+            },
+          chenkTodo:{
+            type:Function,
+            default: function(){  return []    }
+          },
+           delFun:{
+            type:Function,
+            default: function(){  return []    }
+          }
+    },
+    components:{
+      concentItem
+    },
+ 
 }
 </script>
