@@ -2,9 +2,9 @@
   <div id="root">
   <div class="todo-container">
     <div class="todo-wrap">
-      <Minput :inputTodo ="inputTodo"></Minput>
+      <Minput @inputTodo ="inputTodo"></Minput>
       <Mlist :list="list" :chenkTodo="chenkTodo" :delFun="delFun"></Mlist>
-      <Mfooter :list="list" v-show="list.length>0" :todoCheck='todoCheck' :clear="clear"></Mfooter>
+      <Mfooter :list="list" v-show="list.length>0" :todoCheck='todoCheck' :clear="clear" @some.once="some" ref="refSome"></Mfooter>
     </div>
   </div>
 </div>
@@ -19,12 +19,22 @@ export default {
     name:'concent',
     data(){
         return{
-          list:[
-            {id:'1', title:"吃饭",done:true },
-            {id:'2', title:"睡觉",done:true},
-            {id:'3', title:"打豆豆",done:false },
-          ],
+          list:JSON.parse(localStorage.getItem('listStorage')) || []
         }
+    },
+    watch:{
+        list:{
+          deep:true,
+          handler(val){
+             localStorage.setItem('listStorage',JSON.stringify(val));
+          }
+        }
+    },
+    mounted(){
+      // this.$refs.refSome.some()
+      this.$bus.$on('hello',(data)=>{
+           console.log('我是',data)
+      })
     },
    methods:{
      inputTodo(obj){
@@ -53,6 +63,9 @@ export default {
      },
      clear(){
       this.list =this.list.filter(n=>n.done !== true)
+     },
+     some(val){
+      console.log(val)
      }
    },
     components:{

@@ -13,12 +13,12 @@ export default {
            inputTitlt:""
         }
     },
-    props:{
-        inputTodo:{
-            type:Function,
-            default: function(){  return [1,1]    }//默认做的事情
-        }
-    },
+    // props:{
+    //     inputTodo:{
+    //         type:Function,
+    //         default: function(){  return [1,1]    }//默认做的事情
+    //     }
+    // },
     methods:{
         addTodo(){
             if(!this.inputTitlt.trim()){
@@ -29,7 +29,7 @@ export default {
                     title:this.inputTitlt,
                     done:false,
                 }
-                this.inputTodo(obj)
+                this.$emit('inputTodo',obj)
                 this.inputTitlt = '';
             }
           

@@ -24,4 +24,8 @@ Vue.config.productionTip = false//关闭vue生产提示
 new Vue({
   router,
   render: h => h(App),//引入vue残缺版需要render函数编译
+  beforeCreate(){
+    Vue.prototype.$bus = this;
+  }
+
 }).$mount('#app')//app挂载vue
