@@ -7,22 +7,28 @@ Vue.use(ElementUI);//挂载
 // import { cilck2 } from './mixin'//引入mixin
 // Vue.mixin(cilck2)
 import plugins from './pubgins'//引入pubgins 自定义插件
+import {getToken} from '@/utils/auth'
+import store from '@/store'//引入
 Vue.use(plugins)
 // // 引入全局css
 import './assets/style/header.scss'
 // import './assets/style/header.scss'
 router.beforeEach((to,from,next)=>{//全局前置路由守卫
-  console.log(to,from,next)
-  if(to.path == '/role'){
-    alert("请先登录")
+  let token =getToken();
+  console.log(token)
+  if(to.path == '/' ||(null === token && to.path != '/login')){
+    // alert("请先登录")
+    next({path: '/login'})
   }else{
     next();
   }
 })
+
 Vue.config.productionTip = false//关闭vue生产提示
 //创建vue实例对象 -vm
 new Vue({
   router,
+  store,
   render: h => h(App),//引入vue残缺版需要render函数编译
   beforeCreate(){
     Vue.prototype.$bus = this;

@@ -3,6 +3,9 @@
     <el-menu
       :default-active="activeIndex"
       class="el-menu-demo"
+      background-color="#545c64"
+      text-color="#fff"
+      active-text-color="#ffd04b"
     >
       <template v-for="item in dynamicList">
         <el-submenu v-if="item.children.length" :index="item.key" :key="item.key">
@@ -148,6 +151,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.el-menu-demo{
+  height: calc(100vh - 100px);
+}
 .el-menu--horizontal>.el-menu-item.is-active{
   width: 100%;
 }

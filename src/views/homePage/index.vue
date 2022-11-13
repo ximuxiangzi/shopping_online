@@ -1,8 +1,8 @@
 <template>
   <div class="hello">
     <el-container>
-      <el-header style="height:100px;">
-        <HomePageTitle :age="age" :name="header"></HomePageTitle>
+      <el-header style="height:100px;background:#545c64;">
+        <HomePageTitle ></HomePageTitle>
       </el-header>
       <el-container >
         <el-aside width="220px" >
@@ -25,10 +25,7 @@ import Menu  from '@/components/menu'
 export default {
   name: "login",
   data() {
-    return {
-      age:18,
-      header:"Header",
-    };
+    return {};
   },
   components:{
     Concent,

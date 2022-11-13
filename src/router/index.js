@@ -15,7 +15,7 @@ VueRouter.prototype.push = function push(location) {
 export const routingList=[
     {
         path: '*',
-        redirect: '/',
+        redirect: '/login',
     },//匹配不到路由时跳转的页面
     {
         path: '/login',
@@ -26,8 +26,8 @@ export const routingList=[
         },
     },
     {
-        path: '/',//每次进入默认进入该路由
-        name: '/',// 可以为路由进行命名,可以通过name进行路由跳转
+        path: '/home',//每次进入默认进入该路由
+        name: '/home',// 可以为路由进行命名,可以通过name进行路由跳转
         // component: Layout,
         component: () => import('@/views/homePage/index.vue'),
         meta: {//可以保存路由里的一些信息，相当于html里的meta元信息,你可以通过$route里来获取
