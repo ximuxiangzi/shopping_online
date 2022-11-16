@@ -37,7 +37,6 @@ module.exports = {
       userInfo:JSON.parse(this.$store.state.userInfo)
     };
   },
-
   methods: {
     /**退出登录 */
     logout(){
@@ -50,7 +49,7 @@ module.exports = {
     },
     /**个人中心 */
     Personal(){
-      this.$router.push({ path: "/home" })
+      // this.$router.push({ path: "/home" })
     }
   },
 };

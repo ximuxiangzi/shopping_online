@@ -76,7 +76,6 @@
 
 <script>
 import { Login } from '@/api/login'
-import {permissionList}from '@/api/sys'
 import {setToken} from '@/utils/auth'
 
 export default {
@@ -103,11 +102,6 @@ export default {
         };
     },
     methods: {
-        getSystem(){
-            permissionList({}).then(res => {
-                console.log(res)
-            });
-        },
         handleLogin() {
             this.$refs.loginForm.validate(valid => {
                 if (valid) {
@@ -117,14 +111,12 @@ export default {
                       password: this.loginForm.password
                     }
                       Login(data).then(res => {
-                        console.log(res)
                         if(res.code !== 200 ){
-                            alert('登录失败')
+                             this.$message.error('登录失败');
                         }else{
-                          this.getSystem();
                           setToken(res.data.success_token)
                           this.$store.commit("my_userInfo",res.data.userInfo);
-                          this.$router.push({ path: "/home" }).catch(() => {});
+                          this.$router.push({ path: "/home" });
                         }
                         this.loading = false;
                       });

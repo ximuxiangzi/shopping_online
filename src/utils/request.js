@@ -8,20 +8,15 @@ axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 // 创建axios实例
 const service = axios.create({
   // axios中请求配置有baseURL选项，表示请求URL公共部分
-  baseURL: 'http://192.168.31.204:8888',
+  baseURL: process.env.VUE_APP_BASE_HOST,
   // 超时
   timeout: 50000
 })
 
-console.log( process.env)
-console.log( process.env.VUE_APP_BASE_API)
 // request拦截器
 service.interceptors.request.use(config => {
   // 是否需要设置 token prodApi
-  //console.error('process.ENVprocess.ENVprocess.ENV',process.env.VUE_APP_BASE_API_PREFIX);
-      console.log( config )
-
-//   config.url = process.env.VUE_APP_BASE_API_PREFIX+config.url;
+  // config.url = process.env.VUE_APP_BASE_API_PREFIX+config.url;
 
   const isToken = (config.headers || {}).isToken === false
   if (getToken() && !isToken) {
@@ -51,7 +46,6 @@ service.interceptors.request.use(config => {
   }
   return config
 }, error => {
-    console.log(error)
     Promise.reject(error)
 })
 
@@ -90,7 +84,6 @@ service.interceptors.response.use(res => {
     }
   },
   error => {
-    console.log('err' + error)
     let { message } = error;
     if (message == "Network Error") {
       message = "后端接口连接异常";

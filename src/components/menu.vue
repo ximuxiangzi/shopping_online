@@ -6,23 +6,33 @@
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b"
+      @select="handleSelect"
     >
       <template v-for="item in dynamicList">
-        <el-submenu v-if="item.children.length" :index="item.key" :key="item.key">
+        <!-- <el-submenu v-if="item.children.length  && item.node.menuType == 0" :index="item.node.path" :key="item.id"  >
           <template slot="title">
-            {{ item.title }}
+            {{ item.label }}
           </template>
           <el-menu-item
-            v-for="(items, key) in item.children"
-            :key="key"
-            :index="items.key"
+            v-for="(items, index) in item.children"
+            :key="items.id"
+            :index="items.node.path"
           >
-            {{ items.name }}
+            {{ items.label }}
           </el-menu-item>
-        </el-submenu>
-        <el-menu-item v-else :index="item.key" :key="item.key">
-          {{ item.title }}
-        </el-menu-item>
+        </el-submenu> -->
+        <!-- <el-menu-item v-else :index="item.id" :key="item.id">
+          {{ item.label }}
+        </el-menu-item> -->
+         <el-menu-item
+            v-for="(items) in item.children"
+            :key="items.node.path"
+            :index="items.node.path"
+          >
+            <template v-if="items.node.menuType == 1">
+                {{ items.label }}
+           </template>
+          </el-menu-item>
       </template>
     </el-menu>
   </div>
@@ -33,121 +43,36 @@ export default {
   name: "Menu",
   data() {
     return {
-      activeIndex:"1",
-      dynamicList: [
-        {
-          title: "首页",
-          key: "1",
-          path: "",
-          children:[],
-        },
-        {
-          title: "企业动态",
-          key: "2",
-          path: "",
-          children:[],
-        },
-        {
-          title: "核心技术",
-          key: "3",
-          path: "",
-          children: [
-            {
-              name: "IOT物联网",
-              key: "3-1",
-              path: "",
-            },
-          ],
-        },
-        {
-          title: "轨道交通",
-          key: "4",
-          path: "",
-          children: [
-            {
-              name: "设施设备资产生命周期管理",
-              key: "4-1",
-              path: "",
-            },
-            {
-              name: "机车整备综合管理",
-             key: "4-2",
-              path: "",
-            },
-          ],
-        },
-        {
-          title: "能源电力",
-          key: "5",
-          path: "",
-          children: [
-            {
-              name: "能源大数据",
-              key: "5-1",
-              path: "",
-            },
-            {
-              name: "电力主设备知识库",
-              key: "5-2",
-              path: "",
-            },
-          ],
-        },
-         {
-          title: "工业制造",
-          key: "6",
-          path: "",
-          children: [
-            {
-              name: "MES制造执行系统",
-              key: "6-1",
-              path: "",
-            },
-            {
-              name: "数字化电焊",
-              key: "6-2",
-              path: "",
-            },
-          ],
-        },
-        {
-          title: "其他领域",
-          key: "7",
-          path: "",
-          children: [
-            {
-              name: "智慧社区",
-              key: "7-1",
-              path: "",
-            },
-            {
-              name: "智慧工地",
-              key: "7-2",
-              path: "",
-            },
-          ],
-        },
-        {
-          title: "关于我们",
-          key: "8",
-          path: "",
-          children: [
-            {
-              name: "企业介绍",
-              key: "8-1",
-              path: "",
-            },
-            {
-              name: "合作伙伴",
-              key: "8-2",
-              path: "",
-            }
-          ],
-        },
-      ],
+      activeIndex:"/home",
+      
     };
   },
-  methods: {},
+  computed:{
+    //菜单
+    dynamicList(){
+      let userInfoList = JSON.parse(this.$store.state.userInfo).roles[0].treeNodes
+      let setChildren ={
+                label:"首页",
+                parentId: "4",
+                node:{
+                  menuType:1,
+                  path:'/home',
+                  }
+        }
+      userInfoList.forEach(e => {
+       e.children.unshift(setChildren);
+      });
+      return  userInfoList
+    }
+  },
+  methods: {
+    // 菜单选择事件
+    handleSelect(key) {
+       this.activeIndex = key;
+       this.$router.push({ path: key });
+    }
+  },
+  
 };
 </script>
 <style lang="scss" scoped>

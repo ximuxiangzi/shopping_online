@@ -7,22 +7,22 @@ Vue.use(ElementUI);//挂载
 // import { cilck2 } from './mixin'//引入mixin
 // Vue.mixin(cilck2)
 import plugins from './pubgins'//引入pubgins 自定义插件
-import {getToken} from '@/utils/auth'
 import store from '@/store'//引入
 Vue.use(plugins)
 // // 引入全局css
 import './assets/style/header.scss'
+import {getDictDataLabel,parseTime, resetForm, addDateRange, selectDictLabel, selectDictLabels, handleTree} from "@/utils/base";
 // import './assets/style/header.scss'
-router.beforeEach((to,from,next)=>{//全局前置路由守卫
-  let token =getToken();
-  console.log(token)
-  if(to.path == '/' ||(null === token && to.path != '/login')){
-    // alert("请先登录")
-    next({path: '/login'})
-  }else{
-    next();
-  }
-})
+import '@/assets/icons' // icon
+import './permission' // permission control
+Vue.prototype.handleTree = handleTree//树结构
+Vue.prototype.selectDictLabels = selectDictLabels//回显数据字典（字符串数组）
+Vue.prototype.selectDictLabel = selectDictLabel//// 回显数据字典
+Vue.prototype.addDateRange = addDateRange//// 添加日期范围
+Vue.prototype.resetForm = resetForm//// 表单重置
+Vue.prototype.parseTime = parseTime//日期时间格式化
+Vue.prototype.getDictDataLabel = getDictDataLabel//表格内有颜色的状态按钮
+
 
 Vue.config.productionTip = false//关闭vue生产提示
 //创建vue实例对象 -vm

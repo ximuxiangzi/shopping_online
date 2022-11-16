@@ -6,6 +6,7 @@
       <span>{{ todo.title }}</span>
     </label>
     <button class="btn btn-danger" @click="del(todo)" :delFun="delFun">删除</button>
+     <button class="btn btn-danger" @click="del(todo)" :delFun="editFun">编辑</button>
   </li>
 </template>
 

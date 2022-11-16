@@ -1,20 +1,16 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-Vue.use(VueRouter);
 // Uncaught (in promise) NavigationDuplicated: Avoided redundant navigation to current location: "/lineMonitor".
-// 解决vue-router重复导航同一个路由的报错问题.
-const originalPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function push(location) {
-    return originalPush.call(this, location).catch((err) => err);
-};
+
 //布局
-// import Layout from "@/components/index.vue";
+import Layout from "@/components/index.vue";
+Vue.use(VueRouter);
 
 //路由
 export const routingList=[
     {
-        path: '*',
+        path: '/',
         redirect: '/login',
     },//匹配不到路由时跳转的页面
     {
@@ -27,48 +23,62 @@ export const routingList=[
     },
     {
         path: '/home',//每次进入默认进入该路由
-        name: '/home',// 可以为路由进行命名,可以通过name进行路由跳转
-        // component: Layout,
-        component: () => import('@/views/homePage/index.vue'),
-        meta: {//可以保存路由里的一些信息，相当于html里的meta元信息,你可以通过$route里来获取
-            title: '首页',
-            requireAuth: true // 只要此字段为true，必须做鉴权处理
-        },    
-    },
-    {
-        path: '/system',
-        name: '系统管理',
-        // component: Layout,
-        component: () => import('@/views/system/index.vue'),
-        meta: {
-            title: '系统管理',
-            requireAuth: true 
-        },
+        // name: '/home',// 可以为路由进行命名,可以通过name进行路由跳转
+        component: Layout,
+        redirect: '/home',
         children:[
             {
-            path: '/system',
-            component: () => import('@/views/system/index.vue'),
+                path:'/home',
+                component: () => import('@/views/homePage/index.vue'),
             },
-           {
-            path: '/menu',
-            name:'menu',
-            component: () => import('@/views/system/menu.vue'),
-           },
-           {
-            path: '/role',
-            name:'role',
-            component: () => import('@/views/system/role.vue'),
-           },
         ]
     },
 ]
-
+// 解决vue-router重复导航同一个路由的报错问题.
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location);
+};
 //把常量routingList放进来
-const createRouter = () =>
-    new VueRouter({
-        // scrollBehavior: () => ({ y: 0 }),
-        routes: routingList,
-    });
-const router = createRouter();
+const router =  new VueRouter({
+    // scrollBehavior: () => ({ y: 0 }),
+    // mode: 'history',
+    routes: routingList,
+});
+//添加路由的方法
+// export function addRoutes(res) {
+//     console.log(1111111111111111)
+    // res.forEach((Router, index) => {
+    //     console.log(Router, index,router)
+    //     router.addRoute({
+    //     // path: Router.path,
+    //     // name: Router.label,
+    //     // component: () => import('@/views/' + Router.label + '.vue'),
+    //   })
+    //   console.log(Router)
+    //   let childrens = Router.children;
+    //   if (childrens != undefined) {
+    //     for (let i = 0; i < childrens.length; i++) {
+    //       if (childrens[i] != undefined) {
+    //         console.log(childrens)
+    //         VueRouter.addRoute('Homepage', {
+    //           path: childrens[i].path,
+    //           name: childrens[i].name,
+    //           component: () => import('@/views/' + childrens[i].name + '.vue')
+    //         })
+    //       }
+    //     }
+    //   }
+    // })
+//   }
+  
+
+
+
+// export function resetRouter() {
+//     const newRouter = createRouter();
+//     router.matcher = newRouter.matcher; // reset router
+// }
 //导出router
+
 export default router
