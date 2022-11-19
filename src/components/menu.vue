@@ -9,7 +9,7 @@
       @select="handleSelect"
     >
       <template v-for="item in dynamicList">
-        <!-- <el-submenu v-if="item.children.length  && item.node.menuType == 0" :index="item.node.path" :key="item.id"  >
+        <el-submenu v-if="item.children.length  && item.node.menuType == 0" :index="item.node.path" :key="item.id"  >
           <template slot="title">
             {{ item.label }}
           </template>
@@ -20,11 +20,11 @@
           >
             {{ items.label }}
           </el-menu-item>
-        </el-submenu> -->
-        <!-- <el-menu-item v-else :index="item.id" :key="item.id">
+        </el-submenu>
+        <el-menu-item v-else :index="item.id" :key="item.id">
           {{ item.label }}
-        </el-menu-item> -->
-         <el-menu-item
+        </el-menu-item>
+         <!-- <el-menu-item
             v-for="(items) in item.children"
             :key="items.node.path"
             :index="items.node.path"
@@ -32,7 +32,7 @@
             <template v-if="items.node.menuType == 1">
                 {{ items.label }}
            </template>
-          </el-menu-item>
+          </el-menu-item> -->
       </template>
     </el-menu>
   </div>
@@ -51,17 +51,23 @@ export default {
     //菜单
     dynamicList(){
       let userInfoList = JSON.parse(this.$store.state.userInfo).roles[0].treeNodes
+      
+// children: (3) [{…}, {…}, {…}]
+// id: "4"
+// label: "系统管理"
+// node: {permissionId: 4, permissionName: "系统管理", parentId: 0, parentIds: null, icon: "#", …}
+// parentId: "0"
       let setChildren ={
-                label:"首页",
-                parentId: "4",
-                node:{
-                  menuType:1,
-                  path:'/home',
-                  }
-        }
-      userInfoList.forEach(e => {
-       e.children.unshift(setChildren);
-      });
+        parentId:'0',
+        id:"/home",
+        label:"首页",
+        node:{
+          menuType:1,
+          path:'/home',
+        },
+        children:[]
+       }
+       userInfoList.unshift(setChildren)
       return  userInfoList
     }
   },
@@ -78,6 +84,7 @@ export default {
 <style lang="scss" scoped>
 .el-menu-demo{
   height: calc(100vh - 100px);
+  text-align: center;
 }
 .el-menu--horizontal>.el-menu-item.is-active{
   width: 100%;

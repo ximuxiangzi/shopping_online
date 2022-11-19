@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: "user_list",
+  name: "user_menu",
   data() {
     return {}
   },

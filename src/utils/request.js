@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Notification, MessageBox, Message } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import { getToken ,removeToken} from '@/utils/auth'
 import errorCode from '@/utils/errorCode'
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
@@ -55,7 +55,7 @@ service.interceptors.response.use(res => {
     const code = res.data.code || 200;
     // 获取错误信息
     const msg = errorCode[code] || res.data.msg || errorCode['default']
-    if (code === 401) {
+    if (code === 4005) {
       MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
           confirmButtonText: '重新登录',
           cancelButtonText: '取消',
@@ -63,7 +63,10 @@ service.interceptors.response.use(res => {
         }
       ).then(() => {
         store.dispatch('LogOut').then(() => {
-          location.href = '/index';
+          location.href = '/login';
+          this.$store.commit("my_userInfo",{});
+          removeToken()
+          this.$router.push({ path: "/login" })
         })
       })
     } else if (code === 500) {
@@ -72,7 +75,7 @@ service.interceptors.response.use(res => {
         type: 'error'
       })
       return Promise.reject(new Error(msg))
-    } else if (code !== 200) {
+    }else if (code !== 200) {
       Notification.error({
         title: msg
       })

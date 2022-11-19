@@ -15,6 +15,8 @@ import {getDictDataLabel,parseTime, resetForm, addDateRange, selectDictLabel, se
 // import './assets/style/header.scss'
 import '@/assets/icons' // icon
 import './permission' // permission control
+import Pagination from "@/components/Pagination";//分页
+
 Vue.prototype.handleTree = handleTree//树结构
 Vue.prototype.selectDictLabels = selectDictLabels//回显数据字典（字符串数组）
 Vue.prototype.selectDictLabel = selectDictLabel//// 回显数据字典
@@ -25,6 +27,8 @@ Vue.prototype.getDictDataLabel = getDictDataLabel//表格内有颜色的状态�
 
 
 Vue.config.productionTip = false//关闭vue生产提示
+//全局组件挂载
+Vue.component('Pagination', Pagination)
 //创建vue实例对象 -vm
 new Vue({
   router,

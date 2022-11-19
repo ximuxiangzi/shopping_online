@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="">
     <el-container>
       <el-header style="height:100px;background:#545c64;">
         <HomePageTitle ></HomePageTitle>
@@ -35,4 +35,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.el-main{
+  height: 89vh;
+}
+</style>

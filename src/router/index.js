@@ -2,7 +2,11 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 // Uncaught (in promise) NavigationDuplicated: Avoided redundant navigation to current location: "/lineMonitor".
-
+// 解决vue-router重复导航同一个路由的报错问题.
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location);
+};
 //布局
 import Layout from "@/components/index.vue";
 Vue.use(VueRouter);
@@ -34,11 +38,7 @@ export const routingList=[
         ]
     },
 ]
-// 解决vue-router重复导航同一个路由的报错问题.
-const originalPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function push(location) {
-    return originalPush.call(this, location);
-};
+
 //把常量routingList放进来
 const router =  new VueRouter({
     // scrollBehavior: () => ({ y: 0 }),
