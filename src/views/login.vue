@@ -1,10 +1,10 @@
 <template>
     <div  class="loginBox zoomInDown animated animated-delay05">
         <!--  顶部 logo  -->
-                <div class="logoBox">
-                    <img src="@/assets/images/peoplelogo.jpg" alt="logo" width="120px" height="auto">
-                    <span style="margin-left:62px">栗子后台管理系统</span>
-                </div>
+        <div class="logoBox">
+            <img src="@/assets/images/peoplelogo.jpg" alt="logo" width="120px" height="auto">
+            <span style="margin-left:62px">栗子后台管理系统</span>
+        </div>
          <div class="login">
             <el-form
                 ref="loginForm"
@@ -114,8 +114,15 @@ export default {
                         if(res.code !== 200 ){
                              this.$message.error('登录失败');
                         }else{
+                          let hasData=[];
                           setToken(res.data.success_token)
                           this.$store.commit("my_userInfo",res.data.userInfo);
+                          res.data.userInfo.roles[0]?.permissionList.forEach(z=>{
+                            if(z.menuType == 2){
+                               hasData.push(z.permissionPerms)
+                            }
+                          });
+                          this.$store.commit("setPermission",hasData);
                           this.$router.push({ path: "/home" });
                         }
                         this.loading = false;

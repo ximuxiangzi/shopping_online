@@ -17,8 +17,7 @@ export default {
                 el.value = binding.value;
             },
             //指令被插入页面时
-            inserted(el, ){
-                // console.log('inserted')
+            annserted(el, ){
                 el.focus();
             },
             //指令所在模版被重新解析时

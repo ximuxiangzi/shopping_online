@@ -30,13 +30,11 @@ router.beforeEach((to,from,next)=>{//全局前置路由守卫
 })
 
 function routerCom(path) { //对路由的component解析
-  console.log(path)
   return (resolve) => require([`@/views${path}.vue`], resolve);
 }
 
 
 function loadChild(data){
-  console.log(data)
   let val=[];
   ( data || []).forEach(e=>{
     if(e.node.menuType !== 2){

@@ -42,7 +42,7 @@ export const routingList=[
 //把常量routingList放进来
 const router =  new VueRouter({
     // scrollBehavior: () => ({ y: 0 }),
-    // mode: 'history',
+    mode: 'history',
     routes: routingList,
 });
 //添加路由的方法

@@ -262,17 +262,26 @@ export default {
   },
   methods: {
     //角色数数据
-    roleList() {
+    roleList(id) {
+      console.log(id)
       roletreeList().then((res) => {
-        // managerType 0 
-
         this.treeEach(res.data);
-        // console.log(res.data)
         this.roleOptions = res.data;
+        if(id){
+           userView(id).then((response) => {
+           this.form = response.data.convert;
+           console.log( 1,this.form)
+          this.$nextTick(() => {
+            this.$refs.tree.setCheckedKeys(response.data.convert.roleIds);
+          });
+      });
+
+        }
+       
       });
     },
     treeEach(data){
-      data.forEach(n=>{
+      (data || []).forEach(n=>{
         n.node.managerType = 0;
           if(n.children){
             this.treeEach(n.children)
@@ -280,15 +289,7 @@ export default {
       })
     },
     //树节点每层的
-    // renderContent(h, {node, data, store}){
-    //   console.log(data.managerType);
-    //   return (<div>{node.label} <span  onclick={()=>{
-    //     console.log(data.managerType)
-    //     return  (data.managerType == 0 || data.managerType == undefined)?data.managerType = 1:data.managerType = 0;
-    //   }} 
-    //    >{(data.managerType == 0 || data.managerType == undefined)?<span style="color:#409EFF">非同级管理员</span>:<span style="color:red">同级管理员</span>}</span></div> )
-    // },
-    renderContent(h, {node, data, store}) {
+    renderContent(h, {node, data}) {
       return (
           <span class="custom-tree-node">
             <span>{node.label}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -334,49 +335,34 @@ export default {
     },
     /*点击修改 */
     handleUpdate(row) {
-      console.log(row)
       this.reset();
-      this.roleList();
-      userView(row.id).then((response) => {
-        this.form = response.data.convert;
-          // this.$nextTick(() => {
-          //   this.form.permissionIds.forEach((v) => {
-          //     this.$nextTick(() => {
-          //       this.$refs.menu.setChecked(v, true, false);
-          //     });
-          //   });
-          // });
-      this.userDialog = {
+      this.roleList(row.id);
+        this.userDialog = {
         title: "修改角色",
         open: true,
       };
-      });
     },
     /** 提交按钮 */
     submitForm: function () {
         // userRelationRole: [], //角色组  // {managerType: 0//0 非同级管理员 1 同级管理员, roleId: "84"}
       this.$refs["form"].validate((valid) => {
         if (valid) {
-          console.log(this.$refs.tree.getCheckedNodes());
-          let nodeList =this.$refs.tree.getCheckedNodes();
-          this.form.userRelationRole = [];
-          nodeList.forEach(n => {
-             console.log(n)
+            let nodeList =this.$refs.tree.getCheckedNodes();
+            this.form.userRelationRole = [];
+            console.log(nodeList);
+            (nodeList || []).forEach(n => {
              let json ={
-              managerType:n.managerType,
+              managerType:n.node.managerType,
               roleId:n.id
              };   
              this.form.userRelationRole.push(json)         
           });
-           console.log(this.form);
-          // if (this.form.id != null) {
-          //   console.log(this.getMenuAllCheckedKeys());
-          //   this.form.permissionIds = this.getMenuAllCheckedKeys();
-          //   this.getEdit(this.form);
-          // } else {
-          //   this.form.permissionIds = this.getMenuAllCheckedKeys();
-          //   this.getAdd(this.form);
-          // }
+          if (this.form.id != null) {
+            this.getEdit(this.form);
+           console.log("this.form.id",this.form);
+          } else {
+            this.getAdd(this.form);
+          }
         }
       });
     },
@@ -458,9 +444,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.renderContentClass{
-  color: #409EFF !important;
-}
+
 
 .custom-tree-node {
   flex: 1;

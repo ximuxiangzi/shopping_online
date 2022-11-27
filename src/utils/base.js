@@ -2,7 +2,8 @@
  * 通用js方法封装处理
  * Copyright (c) 2019 seclion
  */
-
+import service from "@/utils/request";
+import axios from 'axios';
 const baseURL = process.env.VUE_APP_BASE_API
 
 // 日期格式化
@@ -194,3 +195,28 @@ export function tansParams(params) {
 // 	const dict = getDictData(dictType, value);
 // 	return dict ? dict.label : '';
 //   }
+
+
+  // 通用下载方法
+  export function downloadBy(url, params) {
+	return service.get(url, { params:params, responseType: 'blob'
+		}).then((res) => {
+			console.log(res)
+			let contentDisposition = res.headers['content-disposition']?res.headers['content-disposition']:res.headers['Content-Disposition'];
+			console.log(contentDisposition)
+			contentDisposition = contentDisposition.split(";")[1];
+			let fileName = window.decodeURI(contentDisposition.split("=")[1].split(",")[0],"utf-8"); // 下载的文件名称
+			console.log(fileName)
+			const blob = new Blob([res.data,res.headers['content-type']]);
+			const downloadElement = document.createElement("a");
+			const href = window.URL.createObjectURL(blob);
+			//后台再header中传文件名
+			downloadElement.href = href;
+			downloadElement.download = fileName;
+			document.body.appendChild(downloadElement);
+			downloadElement.click();
+			document.body.removeChild(downloadElement); // 下载完成移除元素
+			window.URL.revokeObjectURL(href); // 释放掉blob对象
+	})
+  }
+  

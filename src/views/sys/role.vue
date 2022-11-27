@@ -276,7 +276,6 @@ export default {
     /** 查询菜单树结构 */
     getMenuTreeselect(id) {
       permissionList().then((response) => {
-          console.log(0)
         this.menuOptions = response.data;
         if(id){
         console.log(1)
@@ -285,7 +284,7 @@ export default {
           this.$nextTick(() => {
             this.$refs.menu.setCheckedKeys(response.data.permissionIds);
           });
-      });
+        });
         }
       });
     },

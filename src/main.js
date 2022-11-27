@@ -11,7 +11,7 @@ import store from '@/store'//引入
 Vue.use(plugins)
 // // 引入全局css
 import './assets/style/header.scss'
-import {getDictDataLabel,parseTime, resetForm, addDateRange, selectDictLabel, selectDictLabels, handleTree} from "@/utils/base";
+import {getDictDataLabel,parseTime, resetForm, addDateRange, selectDictLabel, selectDictLabels, handleTree,downloadBy} from "@/utils/base";
 // import './assets/style/header.scss'
 import '@/assets/icons' // icon
 import './permission' // permission control
@@ -24,11 +24,16 @@ Vue.prototype.addDateRange = addDateRange//// 添加日期范围
 Vue.prototype.resetForm = resetForm//// 表单重置
 Vue.prototype.parseTime = parseTime//日期时间格式化
 Vue.prototype.getDictDataLabel = getDictDataLabel//表格内有颜色的状态按钮
-
+Vue.prototype.downloadBy = downloadBy//下载
 
 Vue.config.productionTip = false//关闭vue生产提示
 //全局组件挂载
 Vue.component('Pagination', Pagination)
+import JsonViewer from 'vue-json-viewer'//json 解析
+Vue.use(JsonViewer)
+
+import directive from './directive' // directive
+Vue.use(directive)
 //创建vue实例对象 -vm
 new Vue({
   router,
@@ -37,5 +42,4 @@ new Vue({
   beforeCreate(){
     Vue.prototype.$bus = this;
   }
-
 }).$mount('#app')//app挂载vue

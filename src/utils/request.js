@@ -80,9 +80,9 @@ service.interceptors.response.use(res => {
         title: msg
       })
       return Promise.reject('error')
-    }else if(res.headers['content-type'] === 'application/msword' || res.headers['content-type'] === 'application/vnd.ms-excel'){
+    }else if(res.headers['content-type'] !== 'application/json'){
       return res;
-    } else {
+    } else if(res.headers['content-type'] === 'application/json'){
       return res.data
     }
   },
