@@ -1,12 +1,12 @@
 <template>
   <div class="">
     <el-container>
-      <el-header style="height:100px;background:#545c64;">
-        <HomePageTitle ></HomePageTitle>
+      <el-header style="height: 100px; background: #545c64">
+        <HomePageTitle @getCommand="getCommand"></HomePageTitle>
       </el-header>
-      <el-container >
-        <el-aside width="220px" >
-          <Menu></Menu>
+      <el-container>
+        <el-aside width="220px">
+          <Menu :dynamicList="data"></Menu>
         </el-aside>
         <el-container>
           <el-main>
@@ -25,7 +25,17 @@ import Menu  from './menu'
 export default {
   name: "login",
   data() {
-    return {};
+    return {
+      data:[],
+    };
+  },
+   methods:{
+     getCommand(val){
+       this.data =val
+     }
+   },
+  created(){
+      this.data= JSON.parse(this.$store.state.Options.menuData)
   },
   components:{
     Main,
@@ -36,7 +46,7 @@ export default {
 </script>
 
 <style scoped>
-.el-main{
+.el-main {
   height: 89vh;
 }
 </style>

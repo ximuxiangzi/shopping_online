@@ -109,6 +109,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleUpdate(scope.row)" 
+            v-hasPermi="['sys:log:edit']"
             >查看</el-button
           >
           <el-button
@@ -116,7 +117,7 @@
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['sys:log:remove','sys:log:add']"
+            v-hasPermi="['sys:log:remove']"
             >删除
           </el-button>
         </template>

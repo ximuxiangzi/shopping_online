@@ -64,7 +64,7 @@ service.interceptors.response.use(res => {
       ).then(() => {
         store.dispatch('LogOut').then(() => {
           location.href = '/login';
-          this.$store.commit("my_userInfo",{});
+          this.$store.commit("Options/my_userInfo",{});
           removeToken()
           this.$router.push({ path: "/login" })
         })

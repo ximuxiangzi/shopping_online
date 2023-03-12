@@ -14,7 +14,7 @@
             {{ item.label }}
           </template>
           <el-menu-item
-            v-for="(items, index) in item.children"
+            v-for="items in item.children"
             :key="items.id"
             :index="items.node.path"
           >
@@ -24,15 +24,6 @@
         <el-menu-item v-else :index="item.id" :key="item.id">
           {{ item.label }}
         </el-menu-item>
-         <!-- <el-menu-item
-            v-for="(items) in item.children"
-            :key="items.node.path"
-            :index="items.node.path"
-          >
-            <template v-if="items.node.menuType == 1">
-                {{ items.label }}
-           </template>
-          </el-menu-item> -->
       </template>
     </el-menu>
   </div>
@@ -44,32 +35,30 @@ export default {
   data() {
     return {
       activeIndex:"/home",
-      
     };
   },
-  computed:{
-    //菜单
-    dynamicList(){
-      let userInfoList = JSON.parse(this.$store.state.userInfo).roles[0].treeNodes
-      
-// children: (3) [{…}, {…}, {…}]
-// id: "4"
-// label: "系统管理"
-// node: {permissionId: 4, permissionName: "系统管理", parentId: 0, parentIds: null, icon: "#", …}
-// parentId: "0"
-      let setChildren ={
-        parentId:'0',
-        id:"/home",
-        label:"首页",
-        node:{
-          menuType:1,
-          path:'/home',
-        },
-        children:[]
-       }
-       userInfoList.unshift(setChildren)
-      return  userInfoList
-    }
+  //  computed:{
+  //    dynamicList(){
+  //     let userInfoList = JSON.parse(this.$store.state.userInfo).roles[0].treeNodes
+  //     let setChildren ={
+  //       parentId:'0',
+  //       id:"/home",
+  //       label:"首页",
+  //       node:{
+  //         menuType:1,
+  //         path:'/home',
+  //       },
+  //       children:[]
+  //      }
+  //      userInfoList.unshift(setChildren)
+  //     return  userInfoList
+  //   }
+  // },
+ props: {
+    dynamicList: {
+      type: Array,
+      default: () => [],
+    },
   },
   methods: {
     // 菜单选择事件
@@ -77,8 +66,7 @@ export default {
        this.activeIndex = key;
        this.$router.push({ path: key });
     }
-  },
-  
+  } 
 };
 </script>
 <style lang="scss" scoped>

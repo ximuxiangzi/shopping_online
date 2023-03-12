@@ -36,6 +36,7 @@
             icon="el-icon-plus"
             size="mini"
             @click="handleAdd()"
+            v-hasPermi="['sys:user:add']"
             >新增</el-button
           >
         </el-col>
@@ -90,12 +91,16 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
+            v-hasPermi="['sys:user:update']"
             >修改</el-button
           >
           <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
+          v-hasPermi="['sys:user:remove']"
             >删除
           </el-button>
-          <el-button size="mini" type="text" icon="el-icon-warning-outline" v-show="scope.row.userAccountLoginNum>0"  @click="handleDeleteDown(scope.row)"
+          <el-button size="mini" type="text" icon="el-icon-warning-outline" v-show="scope.row.userAccountLoginNum>0" 
+             @click="handleDeleteDown(scope.row)"
+             v-hasPermi="['system:user:offline']"
             >下线</el-button
           >
         </template>

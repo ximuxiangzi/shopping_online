@@ -17,6 +17,13 @@ import '@/assets/icons' // icon
 import './permission' // permission control
 import Pagination from "@/components/Pagination";//分页
 
+// main.js (入口文件中引入js和样式文件)
+import videojs from 'video.js'
+import 'video.js/dist/video-js.css'
+ 
+// 如果需要可以注册为vue全局方法
+Vue.prototype.$video = videojs;
+
 Vue.prototype.handleTree = handleTree//树结构
 Vue.prototype.selectDictLabels = selectDictLabels//回显数据字典（字符串数组）
 Vue.prototype.selectDictLabel = selectDictLabel//// 回显数据字典
@@ -25,13 +32,14 @@ Vue.prototype.resetForm = resetForm//// 表单重置
 Vue.prototype.parseTime = parseTime//日期时间格式化
 Vue.prototype.getDictDataLabel = getDictDataLabel//表格内有颜色的状态按钮
 Vue.prototype.downloadBy = downloadBy//下载
-
 Vue.config.productionTip = false//关闭vue生产提示
 //全局组件挂载
 Vue.component('Pagination', Pagination)
 import JsonViewer from 'vue-json-viewer'//json 解析
 Vue.use(JsonViewer)
 
+import vueResource from 'vue-resource'//引入插件vue-resource 请求接口Xhl
+Vue.use(vueResource)//使用插件
 import directive from './directive' // directive
 Vue.use(directive)
 //创建vue实例对象 -vm

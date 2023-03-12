@@ -1,7 +1,10 @@
 import hasPermi from './hasPermission'
+import Loading from "./Loading"
+
 
 const install = function(Vue) {
   Vue.directive('hasPermi', hasPermi)
+  Vue.directive("loading", Loading);
 }
 
 if (window.Vue) {

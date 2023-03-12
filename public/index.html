@@ -8,8 +8,13 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!-- 配置页签图标 -->
     <link rel="icon" href="<%= BASE_URL %>-.jpg">
+    <!-- 引入cesium css-->
+    <link rel="stylesheet" href="./Cesium/Widgets/widgets.css">
+    <!-- 引入第三方bootstrap -->
+    <!-- <link rel="stylesheet" href="<%= BASE_URL %>css/bootstrap.css"> -->
      <!-- 配置页签标题 -->
-    <title><%= htmlWebpackPlugin.options.title %></title>
+     <!-- <title><%= htmlWebpackPlugin.options.title %></title> -->
+     <title>阿婷系统</title>
   </head>
   <body>
     <!-- 当浏览器不支持js时 noscript就会被渲染-->
@@ -19,5 +24,6 @@
     <!-- 容器 -->
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script src="./Cesium/Cesium.js"></script>
   </body>
 </html>

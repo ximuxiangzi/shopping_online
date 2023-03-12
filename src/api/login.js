@@ -17,5 +17,12 @@ export function loginOut() {
     method: 'get'
   })
 }
-
+// /oauth/switchRole/{roleId}
+// 切换账号方法
+export function switchRole(roleId) {
+  return request({
+    url: oauth+ '/switchRole/'+roleId,
+    method: 'get'
+  })
+}
 
